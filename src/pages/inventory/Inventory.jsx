@@ -1,11 +1,18 @@
 import React, {useState} from "react";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import './Inventory.scss';
-import { Nav } from 'react-bootstrap';
+import {Nav} from 'react-bootstrap';
+import {useSelector} from "react-redux";
+
 
 export function Inventory() {
-    const [options] = useState(["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const vehicleList = useSelector(state => state.vehicleList.list);
+    const task_types = useSelector(state => state.task_types.list);
+    const assigned_to = useSelector(state => state.assigned_to.list);
+    const more = useSelector(state => state.more.list);
+    const plan_status = useSelector(state => state.plan_status.list);
+    const task_progress = useSelector(state => state.task_progress.list);
     return (
         <>
             <div className="main-container container-fluid">
@@ -14,19 +21,19 @@ export function Inventory() {
                         <label>Filters</label>
                     </div>
                     <div className="d-inline-block mt-2 me-2">
-                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Plan Status" options={options} name="PlanStatus"/>
+                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Plan Status" options={plan_status} name="PlanStatus"/>
                     </div>
                     <div className="d-inline-block mt-2 me-2">
-                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Task Type" options={options} name="TaskType"/>
+                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Task Type" options={task_types} name="TaskType"/>
                     </div>
                     <div className="d-inline-block mt-2 me-2">
-                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Task Progress" options={options} name="TaskProgress"/>
+                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Task Progress" options={task_progress} name="TaskProgress"/>
                     </div>
                     <div className="d-inline-block mt-2 me-2">
-                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Assigned To" options={options} name="AssignedTo"/>
+                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="Assigned To" options={assigned_to} name="AssignedTo"/>
                     </div>
                     <div className="d-inline-block mt-2 me-2">
-                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="More(1)" options={options} name="More"/>
+                        <DropdownMultiselect buttonClass="bg-white shadow-sm pe-3" placeholder="More(1)" options={more} name="More"/>
                     </div>
                     <div className="d-inline-block mt-2 me-2 ms-auto">
                         <input placeholder="Search" className="form-control border-0 shadow-sm pe-3"/>
@@ -46,9 +53,9 @@ export function Inventory() {
                 </div>
 
                 <ul className="list-group bg-transparent mb-5">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(d => {
+                    {vehicleList.map(d => {
                         return (
-                            <li key={'key-'+d} className="list-group-item border-0 pb-1 mb-1 bg-transparent">
+                            <li key={'key-' + d} className="list-group-item border-0 pb-1 mb-1 bg-transparent">
                                 <div className="row bg-white shadow-sm">
                                     <div className="col-md-2 col-12 border-bottom border-end text-center">
                                         <img alt="Demo POC" className="car-image" src="./images/BMW.png"/>
@@ -57,11 +64,11 @@ export function Inventory() {
                                         {/* ----------------------------------------------------------------- */}
                                         <ul className="list-group">
                                             {[1, 2].map(d => (
-                                                <li key={'key'+d} className="list-group-item border-0">
+                                                <li key={'key' + d} className="list-group-item border-0">
                                                     <div className="d-flex w-100">
                                                         <h6 className="mb-1">
-                                                        <small style={{fontSize: "10px"}} className="bg-dark text-white p-1 rounded-circle">MU</small>&nbsp; Manager User</h6>
-                                                        <small className="ms-auto">3d ago</small>
+                                                            <small style={{fontSize: "10px"}} className="bg-dark text-white p-1 rounded-circle">MU</small>&nbsp; Manager User</h6>
+                                                            <small className="ms-auto">3d ago</small>
                                                     </div>
                                                     <div className="text-muted ps-4 mb-1 w-100 text-start">&nbsp; text 4</div>
                                                 </li>
@@ -97,9 +104,7 @@ export function Inventory() {
                                                 {/* Right Column */}
                                                 <div className="col-12 col-md-6">
                                                     <div className="d-flex mt-2 mb-2">
-                                                        <div>
-                                                            <i className="p-1 fa fa-list m-3 mt-0 me-0" aria-hidden="true"/>
-                                                        </div>
+                                                        <div><i className="p-1 fa fa-list m-3 mt-0 me-0" aria-hidden="true"/></div>
                                                         <div>
                                                             <p className="m-0 p-0 ps-3 fw-bold">Recon Plan</p>
                                                             <p className="m-0 p-0 ps-3">$4,321</p>
@@ -146,15 +151,17 @@ export function Inventory() {
                         </div>
 
                         <div className="d-md-none w-100 mt-2">
-                        <Nav justify variant="tabs" defaultActiveKey="/home">
-                            <Nav.Item><Nav.Link eventKey="link-1">Recon Plan</Nav.Link></Nav.Item>
-                            <Nav.Item><Nav.Link eventKey="link-2">Activity</Nav.Link></Nav.Item>
-                        </Nav>
+                            <Nav justify variant="tabs" defaultActiveKey="/home">
+                                <Nav.Item><Nav.Link eventKey="link-1">Recon Plan</Nav.Link></Nav.Item>
+                                <Nav.Item><Nav.Link eventKey="link-2">Activity</Nav.Link></Nav.Item>
+                            </Nav>
                         </div>
 
                     </div>
 
-                    <i className="fa fa-close close-button bm" onClick={() => {setOpenDrawer(!openDrawer);}}
+                    <i className="fa fa-close close-button bm" onClick={() => {
+                        setOpenDrawer(!openDrawer);
+                    }}
                     />
                 </div>
             </div>

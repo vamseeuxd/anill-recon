@@ -12,6 +12,7 @@ export function AppHeader() {
                     <Nav><NavLink className="btn btn-link" to="">Dashboard</NavLink></Nav>
                     <Nav><NavLink className="btn btn-link ml-2" to="/inventory">Inventory</NavLink></Nav>
                     <Nav><NavLink className="btn btn-link ml-2" to="/tasks">Tasks</NavLink></Nav>
+                    <Nav><NavLink className="btn btn-link ml-2" to="/cars">Cars</NavLink></Nav>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
